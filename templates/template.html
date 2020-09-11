@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Awards database</title>
+    <link rel="stylesheet" type="text/css" href="/css/awards.css">
+</head>
+<body>
+<form class="search" method="get">
+    <h1>Поле для пошуку</h1>
+    <input name="people_last_name" type="text" size="40" placeholder="Прізвище" list="people_last_name" value="{{ request.args.people_last_name }}">
+    <input name="people_first_name" type="text" size="40" placeholder="Ім'я" list="people_first_name" value="{{ request.args.people_first_name }}">
+    <input name="people_patronym" type="text" size="40" placeholder="По-батькові" list="people_patronym" value="{{ request.args.people_patronym }}">
+    <input type="submit" value="Шукати!">
+    <a href="{{ url_for('main') }}">Відмінити пошук</a>
+</form>
+<form class="input" method="post">
+    <h1>Поле для вводу даних</h1>
+    <table>
+        <tr>
+            <td rowspan="3">ПІБ нагородженого</td>
+            <td><input name="people_last_name" type="text" size="40" placeholder="Прізвище" list="people_last_name">
+            </td>
+        </tr>
+        <tr>
+            <td><input name="people_first_name" type="text" size="40" placeholder="Ім'я" list="people_first_name"></td>
+        </tr>
+        <tr>
+            <td><input name="people_patronym" type="text" size="40" placeholder="По-батькові" list="people_patronym">
+            </td>
+        </tr>
+        <tr>
+            <td>Назва нагороди</td>
+            <td><select name="award_id" size="9">
+                {% for award in awards %}
+                <option value='{{ award.award_id }}'>{{ award.award_name }}</option>
+                ";
+                {% endfor %}
+            </select></td>
+        </tr>
+        <tr>
+            <td>Дата вручення нагороди</td>
+            <td><input name="award_date" type="date" size="40"</td>
+        </tr>
+    </table>
+    <input type="submit" value="Зберегти">
+</form>
+<h1>Список нагороджених</h1>
+<table class="out">
+    <tr>
+        <th>Дата нагородження</th>
+        <th>Прізвище</th>
+        <th>Ім'я</th>
+        <th>По-батькові</th>
+        <th>Назва нагороди</th>
+        <th>Тип нагороди</th>
+    </tr>
+    {% for person in awarded_people %}
+    <tr>
+        <td>{{ person.award_date }}</td>
+        <td>{{ person.people_last_name }}</td>
+        <td>{{ person.people_first_name }}</td>
+        <td>{{ person.people_patronym }}</td>
+        <td>{{ person.award_name }}</td>
+        <td>{{ person.award_type }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<datalist id="people_last_name">
+    {% for last_name in unique_last_names %}
+    <option>{{ last_name }}</option>
+    {% endfor %}
+</datalist>
+<datalist id="people_first_name">
+    {% for first_name in unique_first_names %}
+    <option>{{ first_name }}</option>
+    {% endfor %}
+</datalist>
+<datalist id="people_patronym">
+    {% for patronym in unique_patronyms %}
+    <option>{{ patronym }}</option>
+    {% endfor %}
+</datalist>
+<datalist id="award_name">
+    {% for award in awards %}
+    <option>{{ award.award_name }}</option>
+    ";
+    {% endfor %}
+</datalist>
+</body>
+</html>

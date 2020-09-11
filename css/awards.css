@@ -1,0 +1,10 @@
+table.out tr:nth-child(2n){
+	background-color: #E6E6FA;
+}
+table.out th{
+	background-color: #66CCFF;
+	padding:3px;
+}
+table.out td{
+	padding:3px;
+}
